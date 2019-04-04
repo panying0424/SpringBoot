@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>show Users</title>
+</head>
+<body>
+
+	<table border="1" style="width: 500px">
+		<tr>
+			<th>用户ID</th>
+			<th>用户姓名</th>
+			<th>用户密码</th>
+		</tr>
+		<!-- 变量名:值名称 -->
+		<tr	th:each="user:${users}">
+			<td th:text=${user.u_Id}></td>
+			<td th:text=${user.u_UserName}></td>
+			<td th:text=${user.u_PassWord}></td>
+		</tr>
+	</table>
+
+</body>
+</html>

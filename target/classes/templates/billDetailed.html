@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Or Update</title>
+<script src="/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+
+	<h1 align="center">Add Or Update</h1>
+
+	<hr>
+
+	<form action="/bill/updateBill" method="post">
+		<input type="hidden" id="b_Id" name="b_Id" th:value="${bill.b_Id}" />
+		<table style="margin: 0 auto; width: 600px" border="1">
+			<tr>
+				<td>金额</td>
+				<td><input type="text" id="b_money" name="b_money" size="70"
+					th:value="${bill.b_money}" /></td>
+			</tr>
+			<tr>
+				<td>收支</td>
+				<td><select style="width: 250px;" id="budget" name="budget">
+				</select><span style="color: red;">收支不可更改</span></td>
+			</tr>
+
+
+			<tr>
+				<td>账户</td>
+				<td><select id="account" name="account" style="width: 250">
+						<option value="-1">请选择</option>
+				</select></td>
+			</tr>
+
+			<tr>
+				<td>描述</td>
+				<td><input type="text" id="b_describe" name="b_describe"
+					width="250" size="70" style="font-size: 12px"
+					th:value="${bill.b_describe}" /></td>
+			</tr>
+
+			<tr>
+				<td colspan="2" align="center"><input type="submit" /></td>
+			</tr>
+
+		</table>
+	</form>
+
+</body>
+<script type="text/javascript">
+	$.ajax({
+		type : "post",
+		url : "/account/findAccountAll",
+		data : {},
+		async : false,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				$("#account").append(
+						"<option value="+data[i].a_Id+">" + data[i].a_Name
+								+ "</option>");
+			}
+
+		}
+	});
+</script>
+<script type="text/javascript">
+$.ajax({
+	type : "post",
+	url : "/bill/findBillBudget",
+	data : {},
+	async : false,
+	success : function(data) {
+		$("#budget").append(
+				"<option value="+data.expenditure+">支出</option>");
+		$("#budget").append(
+				"<option value="+data.income+">收入</option>");
+
+
+	}
+});
+</script>
+
+<script type="text/javascript">
+//$("#account").val("40288247693d324001693d3374b00001");
+</script>
+<script th:inline="javascript">
+var data = [[${bill.b_budget}]];
+var a_Id = [[${bill.b_account.a_Id}]];
+if(data != null && a_Id != null){
+	$("#budget").val(data );
+	$("#account").val(a_Id );
+}
+</script>
+</html>

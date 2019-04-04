@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Show Bill All</title>
+<link rel="styleSheet" type="text/css" href="/timeSelectionControl.css">
+<script src="/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/timeSelectionControl.js"></script>
+</head>
+<body>
+
+
+
+	<hr>
+
+
+<form action="/bill/conditionQuery" method="post">
+	<span>账户</span>
+	<select id="account" name="account">
+		<option value="-1">请选择账户</option>
+	</select>
+
+	<span>收支</span>
+	<select name="budget" id="budget">
+		<option value="-1">All</option>
+	</select>
+	<span>开始日期</span>
+	<input type="date" id="startDate" name="startDate" onclick="MyDatePick()">
+	<span>结束日期</span>
+	<input type="date"  id="endDate" name="endDate" onclick="MyDatePick()">
+	<span title="开始日期/结束日期必须都选择" style="color: red;">?</span>
+	<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<input type="submit" value="查询">
+
+	</form>
+	
+	<table border="1">
+		<tr>
+			<th>ID</th>
+			<th>创建时间</th>
+			<th>描述</th>
+			<th>交易金额</th>
+			<th>余额</th>
+			<th>收支</th>
+			<th>账户</th>
+			<th>操作</th>
+		</tr>
+		<!-- 变量名:值名称 -->
+		<tr th:each="bill:${bills}">
+			<td th:text=${bill.b_Id}></td>
+			<td th:text=${bill.b_timer}></td>
+			<td th:text=${bill.b_describe}></td>
+			<td th:text=${bill.b_money}></td>
+			<td th:text=${bill.b_balance}></td>
+			<td th:if="${bill.b_budgetr == '支出'}"><span
+				th:text=${bill.b_budgetr} style="color: red"></span></td>
+			<td th:if="${bill.b_budgetr == '收入'}"><span
+				th:text=${bill.b_budgetr} style="color: green"></span></td>
+			<td th:text=${bill.b_account.a_Name}></td>
+			<td><a th:href="@{/bill/findBillById(b_Id=${bill.b_Id})}">详情</a>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+<script type="text/javascript">
+	$.ajax({
+		type : "post",
+		url : "/account/findAccountAll",
+		data : {},
+		async : false,
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				$("#account").append(
+						"<option value="+data[i].a_Id+">" + data[i].a_Name
+								+ "</option>");
+			}
+
+		}
+	});
+</script>
+<script type="text/javascript">
+	$.ajax({
+		type : "post",
+		url : "/bill/findBillBudget",
+		data : {},
+		async : false,
+		success : function(data) {
+			$("#budget").append(
+					"<option value="+data.expenditure+">支出</option>");
+			$("#budget").append("<option value="+data.income+">收入</option>");
+
+		}
+	});
+</script>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SpringBootMyBatisBill</title>
+<style type="text/css">
+	body {
+	margin: 0px;
+}
+
+.header{
+	width: 100%;
+	height: 100px;
+}
+.header_ul{
+	float: left;
+	list-style: none;
+}
+
+.header_ul li{
+	margin-top: 26px;
+	margin-left: 150px;
+	float: left;
+	border: 1px red solid;
+}
+
+.header_ul :hover {
+	color: red;
+}
+
+.header_ul_ul {
+	width: 100px;
+	text-align: center;
+	position: absolute;
+	list-style: none;
+	background: white;
+	color: black;
+}
+
+.header_ul_ul li {
+	float: none;
+	margin: 10px 15px 10px -125px;
+}
+
+.header_ul_user .header_ul_ul {
+	display: none;
+}
+
+.header_ul_bill .header_ul_ul {
+	display: none;
+}
+
+.header_ul_user:hover .header_ul_ul {
+	display: block;
+}	
+
+.header_ul_bill:hover .header_ul_ul {
+	display: block;
+}	
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+</style>
+</head>
+<body>
+
+
+<div class="header">
+	<ul class="header_ul">
+		<li class="header_ul_home">HOME</li>
+		<li class="header_ul_user">User
+			<ul class="header_ul_ul">
+				<li><a href="/user/userLogin">User Login</a></li>
+				<li><a href="/user/findUserAll">All User</a></li>
+				<li><a href="/account/findAccountAllList">All Account</a></li>
+			</ul>
+		</li>
+		<li class="header_ul_bill">Bill
+			<ul class="header_ul_ul">
+				<li><a href="/bill/findBillAll">All Bill</a></li>
+				<li><a href="/bill/addToBill">Add Bill</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+
+
+
+
+</body>
+</html>

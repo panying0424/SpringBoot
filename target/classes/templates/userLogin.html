@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>User Login</title>
+</head>
+<body>
+	<form action="/user/loginUser" method="post"
+		style="text-align: center; margin-top: 200px;">
+
+		<span style="font-size: 50px; font-weight: bold;">用户名:</span>
+		<input type="text" name="u_UserName" style="width: 400px; height: 45px; font-size: 40px;" maxlength="13"><br />
+		<span style="font-size: 50px; font-weight: bold;">密&nbsp;&nbsp;&nbsp;码:</span>
+		<input type="password" name="u_PassWord" style="width: 400px; height: 45px; font-size: 40px; margin-top: 40px;" maxlength="13"><br />
+		<input type="submit" style="font-size: 40px; margin-top: 50px;">
+		<input type="hidden" name="urlStr" th:value="${#httpServletRequest.getParameter('urlStr')}">
+		<span style="color: red;" th:text="${errorTip}"></span>
+	</form>
+</body>
+</html>

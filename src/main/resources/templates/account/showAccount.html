@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Account All</title>
+<script src="/jquery-3.3.1.min.js"></script>
+<style type="text/css">
+	body{
+		font-size: 15px;
+	}
+</style>
+</head>
+<body>
+<img alt="主页" src="/images/home.jpg" width="50px" height="50px" onclick="window.location.href='/'">
+
+
+
+	<form action="/account/updateSort" method="post">
+		<table border="1">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Number</th>
+				<th>Money</th>
+				<th>Money_Account</th>
+				<th>Sort</th>
+				<th>Operation</th>
+			</tr>
+			<tr th:each="account:${accounts}">
+				<td width="250px;"><input type="text" readonly="readonly"  required="required" style="text-align: center; color: red; width: 250px;"  id="a_Id" name="a_Id" th:value=${account.a_Id}></td>
+				<td th:text=${account.a_Name}></td>
+				<td th:text=${account.a_Number}></td>
+				<td th:text=${account.a_Money}></td>
+				<td th:if="${account.a_Monery_Id == null}"></td>
+				<td th:if="${account.a_Monery_Id != null}"><span
+					th:text=${account.a_Monery_Id.a_Id}></span></td>
+				<td><input type="text" required="required" readonly="readonly" style="text-align: center; color: red; font-weight: bold;"  id="a_Sort" name="a_Sort"  th:value=${account.a_Sort}></td>
+				<td><span onclick="moveUp(this)">上移</span>&nbsp;<span
+					onclick="moveDown(this)">下移</span></td>
+			</tr>
+			<tr>
+				<td colspan="7" align="right"><input type="submit" value="保存排序" />
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+<script type="text/javascript">
+	//上移
+	function moveUp(obj) {
+		var current = $(obj).parent().parent(); //获取当前<tr>
+		var prev = current.prev(); //获取当前<tr>前一个元素
+
+		if (current.index() > 1) {
+			var currentSortValue = current.children('td').eq(5).find("input").val();
+			var prevSortValue = prev.children('td').eq(5).find("input").val();
+			current.children('td').eq(5).find("input").val(prevSortValue);
+			prev.children('td').eq(5).find("input").val(currentSortValue);
+		}
+		if (current.index() > 1) {
+			current.insertBefore(prev); //插入到当前<tr>前一个元素前
+		}
+	}
+
+	// 下移
+	function moveDown(obj) {
+		var current = $(obj).parent().parent(); //获取当前<tr>
+		var next = current.next(); //获取当前<tr>后面一个元素
+
+		if (next.length != 0) {
+			var currentSortValue = current.children('td').eq(5).find("input").val();
+			var nextSortValue = next.children('td').eq(5).find("input").val();
+			current.children('td').eq(5).find("input").val(nextSortValue);
+			next.children('td').eq(5).find("input").val(currentSortValue);
+		}
+
+		if (next) {
+			current.insertAfter(next); //插入到当前<tr>后面一个元素后面
+		}
+
+	}
+</script>
+</html>
